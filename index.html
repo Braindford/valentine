@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Valentine agin</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #e6dace;
+            background-image: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Special Elite', cursive;
+            color: #4a3b2a;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        #cover {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #8e735b;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 100;
+            transition: transform 1.5s ease-in-out;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
+        }
+
+        .wax-seal {
+            width: 80px; height: 80px;
+            background: #800000;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            color: #d4af37; font-family: 'Great Vibes', cursive; font-size: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3), inset 0 2px 5px rgba(255,255,255,0.2);
+            cursor: pointer; border: 4px double #600000;
+            animation: pulse 2s infinite;
+        }
+
+        .cover-text {
+            margin-top: 20px; color: #f4e4bc;
+            font-family: 'Special Elite', cursive; font-size: 1.2rem;
+            letter-spacing: 2px;
+        }
+
+        .paper {
+            width: 90%; max-width: 500px;
+            background: #fdf6e3;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: opacity 1s ease 1s, transform 1s ease 1s;
+            background-image: radial-gradient(#d0c0a0 1px, transparent 1px);
+            background-size: 20px 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+            cursor: pointer;
+        }
+
+        .paper::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            box-shadow: inset 0 0 40px rgba(139, 69, 19, 0.1);
+            pointer-events: none;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem; text-align: center;
+            margin-bottom: 20px; color: #800000;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+        }
+
+        p {
+            font-size: 1.1rem; line-height: 1.8;
+            margin-bottom: 20px; text-align: justify;
+        }
+
+        .polaroid {
+            background: white; padding: 10px 10px 30px 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transform: rotate(-3deg); margin: 20px auto;
+            width: 80%; text-align: center;
+            border: 1px solid #ddd;
+        }
+        .polaroid img { width: 100%; filter: sepia(0.3) contrast(0.9); }
+        .caption { font-family: 'Great Vibes', cursive; font-size: 1.5rem; color: #555; margin-top: 10px; }
+
+        .music-player {
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 30px; border-top: 1px dashed #aaa; padding-top: 20px;
+        }
+        .vinyl {
+            width: 40px; height: 40px; background: #222; border-radius: 50%;
+            border: 2px solid #4a3b2a; margin-right: 15px;
+            animation: spin 3s linear infinite;
+        }
+        .vinyl::after {
+            content: ''; display: block; width: 10px; height: 10px;
+            background: #d4af37; border-radius: 50%; margin: 13px auto;
+        }
+
+        .btn-reply {
+            display: block; width: 100%; text-align: center;
+            background: #800000; color: #f4e4bc;
+            padding: 15px; text-decoration: none;
+            font-family: 'Special Elite', cursive; margin-top: 20px;
+            border: 1px dashed #d4af37; cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-reply:hover { background: #5a0000; letter-spacing: 1px; }
+
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        .open-envelope { transform: translateY(-100%); }
+        .show-paper { opacity: 1; transform: translateY(0); }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #8e735b; border-radius: 3px; }
+
+        .hidden-form { display: none; margin-top: 20px; text-align: left;}
+        input, textarea {
+            width: 100%; background: transparent; border: none; border-bottom: 2px solid #8e735b;
+            font-family: 'Special Elite', cursive; padding: 10px; margin-bottom: 10px; font-size: 1rem;
+        }
+        input:focus, textarea:focus { outline: none; border-bottom: 2px solid #800000; }
+
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="ilysb.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="cover">
+        <div class="wax-seal" onclick="bukaSurat()">
+            R
+        </div>
+        <div class="cover-text">Tap the seal to open</div>
+    </div>
+
+    <div class="paper" id="paperContent" onclick="selesaikanNgetik()">
+        <h1>Dearest Ghina</h1>
+        
+        <p>14 Februari, 2026</p>
+
+        <p id="typewriterText"></p> 
+
+        <div class="polaroid">
+            <img src="bru.jpg" alt="Vintage Flower">
+            <div class="caption">A sea of faces, but you are the only one</div>
+        </div>
+
+        <div class="music-player">
+            <div class="vinyl"></div>
+            <div style="font-size: 0.9rem;">Anggap aja ini <br> <em>Piringan Hitam...</em></div>
+        </div>
+
+        <div id="replySection">
+            <button class="btn-reply" onclick="munculinForm(event)">Kirimin pesan untuk aku siniii ✉️</button>
+        </div>
+
+        <div class="hidden-form" id="theForm">
+            <p style="margin-bottom: 10px; font-style:italic;">Tulis disini yaaaaa :</p>
+            <form action="https://formspree.io/f/mykdedpw" method="POST">
+                <input type="text" name="Rating" placeholder="Rate perasaan mu habis baca ini (1-10)..." required>
+                <textarea name="Pesan" rows="4" placeholder="Dear Rangga, sebenarnya aku mau bilang..." required></textarea>
+                <button type="submit" class="btn-reply" style="border:none;">Send Message 🕊️</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        const audio = document.getElementById('bgMusic');
+        const cover = document.getElementById('cover');
+        const paper = document.getElementById('paperContent');
+        const textElement = document.getElementById('typewriterText');
+
+        const suratCinta = "Haii, ghinaaa \n\nMakasih yaa udah mau buka link website ini. Sori kalau agak norak dikit WKWKWKWK. Ada beberapa hal yang mau aku bilang sama mu, tapi sebelum itu, izinkanlah aku menceritakan sebuah kisah, semoga mu berkenan membaca nya\n\n\nDahulu sekalii, di masa Kekaisaran Romawi Kuno, hiduplah seorang pendeta bernama Santo Valentine\n\nWaktu ituu, Kaisar Claudius II ngeluarin sebuah peraturan yang amat kejam, dia melarang para prajurit prajurit muda untuk menikah. Kaisar Claudius percaya, prajurit yang masih lajang bakal bisa bertarung lebih hebat di medan perang kalau dia gak ada mikirin tentang anak istri di rumah\n\n​Namun ternyataa, Santo Valentine menentang kegilaan kaisar ituu. Dengan sembunyi-sembunyi di bawah cahaya lilin yang temaram, Santo Valentine berupaya membantu menikahkan pasangan-pasangan muda yang saling mencintai. Tapi ​Sayangnya, aksinya itu akhirnya ketahuan. Valentine ditangkap, dipenjara, dan dijatuhi hukuman mati\n\n​Tepat sebelum eksekusinya pada tanggal 14 Februari, Valentine menulis sepucuk surat perpisahan terakhir untuk gadis yang dia sayang (katanya gadis itu adalah anak sang sipir penjara yang buta namun berhasil disembuhkan)\n\n​Di akhir surat itu, dia memberikan sebuah kalimat penutup, yang melegenda hingga ribuan tahun setelahnya: 'From your Valentine'\n\nDemikianlah, berkat perjuangan Valentine hingga akhir hayatnya, maka hari ini 14 februari diperingati sebagai hari kasih sayang\n\nGhina, aku cuman mau bilang terimakasih. Kamu nyadar gak sih? hampir setiap hari loh kita bertukar pesan, HAMPIR SETIAP HARI.\n\nAku bahkan lupa entah sejak kapan awalnya kita bisa sampe gini, gak nyadar waktu terus berjalan sampai sekarang. Tapi ternyataa setelah di ingat ingat, salah satu alasan kenapa kita bisa kayak sekarang, itu karena One Piece \n\nKamu tau? pertama kali aku nyadar kalau mu itu ada, itu karena postingan twibbon pkkmb. Disitu kita disuruh buat kasih satu quotes, masih ingat apa quotes yang kamu tulis? People's dream have no end. - Marshall D. Teach \n\nWaktu itu reaksi aku kayak, WAH GILAAA, ADA CEWEK YANG TAU ONE PIECE. Sumpah aku excited banget pas tau ada nakama. Daaaaan waktu itu quotes yang aku tulis juga tentang one piecee. Hidup adalah pilihan, saat kau tak memilih itu adalah pilihanmu. - Monkey D. Luffy \n\nKebetulan atau bukan sih? \n\nHingga waktu terus berjalan dan kita saling chatt di Instagram. Kita ngebahas berbagai hal, ini itu ini itu ini itu, banyaklah pokoknya kannn. Dan kayaknya bukan hampir setiap hari lagi, tapi SETIAP HARI. \n\nKamu tau gak ghin, mungkin bagi muu itu hal yang biasa biasa aja??? tapii bagi aku, itu lebih dari sekedar chatt. Aku merasa ada seseorang yang peduli. Aku ngerasa senang saat saat ngebalesin pesan pesan dari mu. Setiap hari. Sampai aku pun sadar, kalau notif dari muu itu yang paling aku tunggu tunggu \n\nGhinaaa, makasih yaa udah mau jadi teman cerita. Setiap hari nya sangat sangat sangat berharga, sangat sangat berarti. Makasih juga udah mau nanggepin aku setiap hari, meskipun entah apa apa yang aku bahas sama muu. Tapi rasanya itu tuh seruu pake banget. \n\nAkuu ga tau kedepannya bakalan gimana, tapi aku berharap semoga kita dan keluarga kita baik baik aja, sehat sehat aja, diberikan kedamaian dan ketentraman. Dan aku juga ga tau kedepannya kita bakalan gimana, mau coba sesuatu yang baru gak? \n\nSebenarnya agak jenuh sii chat chat teruss setiap hari, tapi mau gimana yaaa, aku sibukk dan kamu juga sibukkkkkkk :(( gw juga mau ngerasain jalan2 kayak orang2 :)) \n\nKayaknya itu aja sih yang mau aku bilang, oh iyaaa ada yang mau aku tanyaa. Kalau dari POV muu gimana sih ???? penasaran \n\nCoba kasih tauu dong, dibawah ada tempat buat ngirim nyaa, kasih tau dari sudut pandang muu gimanaa tentang kita inii \n\nDah yaaa, makasih banyak buat semuanyaaa \n\nFrom your Valentine,\nRangga.";
+
+        let typingTimer; 
+        let isTyping = false; 
+
+        function bukaSurat() {
+            cover.classList.add('open-envelope');
+            audio.volume = 0.5;
+            audio.play().catch(e => console.log("Audio blocked"));
+
+            setTimeout(() => {
+                paper.classList.add('show-paper');
+                ngetikEfek(); 
+            }, 800);
+        }
+
+        function ngetikEfek() {
+            let i = 0;
+            const speed = 40; 
+            isTyping = true;
+
+            function typing() {
+                if (i < suratCinta.length) {
+                    if (suratCinta.charAt(i) === '\n') {
+                        textElement.innerHTML += '<br>';
+                    } else {
+                        textElement.innerHTML += suratCinta.charAt(i);
+                    }
+                    i++;
+                    paper.scrollTop = paper.scrollHeight; 
+                    typingTimer = setTimeout(typing, speed); 
+                } else {
+                    isTyping = false;
+                }
+            }
+            typing();
+        }
+
+        function selesaikanNgetik() {
+            if (isTyping) {
+                clearTimeout(typingTimer);
+                textElement.innerHTML = suratCinta.replace(/\n/g, '<br>');
+                isTyping = false;
+                paper.scrollTop = paper.scrollHeight;
+            }
+        }
+
+        function munculinForm(event) {
+            if(event) event.stopPropagation();
+            
+            document.getElementById('replySection').style.display = 'none';
+            document.getElementById('theForm').style.display = 'block';
+            paper.scrollTop = paper.scrollHeight;
+        }
+    </script>
+</body>
+</html>
